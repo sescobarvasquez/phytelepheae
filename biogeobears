@@ -13,7 +13,7 @@ pacman::p_load(optimx,
                update = FALSE) # logical. If TRUE will attempt to update all out of date packages
 
 #load the tree
-wd = "U:/Documents/PhD in AU/Thesis/ivory palms phylogeny and biogeography/phyt8+cerox/"
+wd = "~/phyt8+cerox/"
 setwd(wd)
 list.files()
 trfn = "phyt_8+cerox.newick"
