@@ -1,0 +1,44 @@
+rm(list=ls())
+dev.off()
+
+# To install and load the packages, we will use the pacman package, an R package management tool that combines the functionality of base library related functions to simultaneously perform multiple actions
+if (!require('pacman')) install.packages('pacman', repos="https://cloud.r-project.org") # load pacman package from the repository, if you do not already have it
+pacman::p_load(ape,
+               phyloch,
+               phytools,
+               update = FALSE) # logical. If TRUE will attempt to update all out of date packages
+
+tree <- read.beast("~/tree_10%.nex")
+
+#plot the tree
+plot.phylo(tree, cex=0.6, label.offset = 0.1)
+axisChrono(side = 1, unit = "Mya", fact=1)
+HPDbars(tree, col = "blue", lwd=3)
+
+#identify the Phytelepheae tribe
+identify(tree, tips = T)
+
+#place the pointer at the stem node of Phytelepheae to extract it
+phyt <- extract.clade(tree, 38)
+
+#conserve one individual per species and remove Ravenea species
+phyt_8 <- keep.tip(phyt, c(2,3,9,11,5,7,13,15,17,18,19))
+plot(phyt_8)
+
+#re organize the tree
+identify(phyt_8, tips = T)
+
+phyt_8<-ape::rotate(phyt_8, 12)
+phyt_8<-ape::rotate(phyt_8, 20)
+phyt_8<-ape::rotate(phyt_8, 13)
+phyt_8<-ape::rotate(phyt_8, 19)
+
+phyt_8<-ape::rotate(phyt_8, 18)
+phyt_8<-ape::rotate(phyt_8, 15)
+phyt_8<-ape::rotate(phyt_8, 16)
+phyt_8<-ape::rotate(phyt_8, 17)
+
+#plot new tree
+plot(phyt_8)
+
+write.tree(phyt_8, "~/phyt_8+cerox.newick")
